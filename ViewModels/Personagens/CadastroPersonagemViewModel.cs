@@ -8,5 +8,6 @@ namespace AppRpgEtec.ViewModels.Personagens
 {
     internal class CadastroPersonagemViewModel
     {
+        //Teste
     }
 }
