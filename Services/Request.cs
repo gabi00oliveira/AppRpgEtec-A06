@@ -10,6 +10,7 @@ namespace AppRpgEtec.Services
 {
     public class Request
     {
+        //Método Put
         public async Task<int> PostReturnIntAsync<TResult>(string uri, TResult data, string token)
         {
             HttpClient httpClient = new HttpClient();
@@ -29,7 +30,7 @@ namespace AppRpgEtec.Services
                 throw new Exception(serialized);
         }
 
-
+        //Método Get
         public async Task<TResult> PostAsync<TResult>(string uri, TResult data, string token)
         {
             HttpClient httpClient = new HttpClient();
@@ -51,6 +52,23 @@ namespace AppRpgEtec.Services
             return result;
         }
 
+        // Metodo Get
+        public async Task<TResult> GetAsync<TResult>(string uri, string token)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization
+            = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await httpClient.GetAsync(uri);
+            string serialized = await response.Content.ReadAsStringAsync();
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                throw new Exception(serialized);
+
+            TResult result = await Task.Run(() => JsonConvert.DeserializeObject<TResult>(serialized));
+            return result;
+        }
+
         // Metodo Put
         public async Task<int> PutAsync<TResult>(string uri, TResult data, string token)
         {
@@ -68,23 +86,6 @@ namespace AppRpgEtec.Services
                 return int.Parse(serialized);
             else
                 throw new Exception(serialized);
-        }
-
-        // Metodo Get
-        public async Task<TResult> GetAsync<TResult>(string uri, string token)
-        {
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization
-            = new AuthenticationHeaderValue("Bearer", token);
-
-            HttpResponseMessage response = await httpClient.GetAsync(uri);
-            string serialized = await response.Content.ReadAsStringAsync();
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                throw new Exception(serialized);
-
-            TResult result = await Task.Run(() => JsonConvert.DeserializeObject<TResult>(serialized));
-            return result;
         }
 
         // Metodo Delete

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using AppRpgEtec.Models;
 using AppRpgEtec.Services.Personagens;
 
@@ -13,7 +14,10 @@ namespace AppRpgEtec.ViewModels.Personagens
     {
         private PersonagemService pService;
         public ObservableCollection<Personagem> Personagens { get; set; }
-       
+
+        public ICommand NovoPersonagemCommand{ get; }
+        public Command NovoPersonagem { get; }
+
         // construtor 
         public ListagemPersonagemViewModel()
         {
@@ -22,6 +26,8 @@ namespace AppRpgEtec.ViewModels.Personagens
             Personagens = new ObservableCollection<Personagem>();
 
             _ = ObterPersonagens();
+
+            NovoPersonagem = new Command(async () => { await ExibirCadastroPersonagem(); });
         }
 
         // Proximos elementos da classe aqui
@@ -33,13 +39,27 @@ namespace AppRpgEtec.ViewModels.Personagens
                 Personagens = await pService.GetPersonagensAsync();
                 OnPropertyChanged(nameof(Personagens));  // Informara a view que houve carregamento
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 // Captara o erro para exibir em tela 
                 await Application.Current.MainPage
                     .DisplayAlert("Ops", ex.Message, "Detalhes" + ex.InnerException, "Ok");
             }
         }
-        
+
+        public async Task ExibirCadastroPersonagem()
+        {
+            try
+            {
+                await Shell.Current.GoToAsync("cadPersonagemView");
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage
+                    .DisplayAlert("Ops", ex.Message, "Detalhes" + ex.InnerException, "Ok");
+
+            }
+        }
+
     }
 }

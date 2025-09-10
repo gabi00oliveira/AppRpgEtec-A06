@@ -5,6 +5,9 @@
              Title="ListagemView">
     <VerticalStackLayout>
         <ScrollView>
+            <Shell.TitleView>
+                <Button Command="{Binding NovoPersonagemCommand}" Text="Novo" HorizontalOptions="End"></Button>
+            </Shell.TitleView>
             <VerticalStackLayout Padding="10, 0, 0, 0" VerticalOptions="FillAndExpand">
                 <ListView x:Name="listView" HasUnevenRows="True" ItemsSource="{Binding Personagens}" >
                     <ListView.ItemTemplate>

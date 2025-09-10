@@ -16,7 +16,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
         public UsuarioViewModel()
         {
             uServices = new UsuarioService();
-            //chama os metodo de baxo(Horganização).
+            //chama os metodo de baixo(Horganização).
             InicializarCommands();
         }
         public void InicializarCommands()
@@ -29,7 +29,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
         public ICommand AutenticarCommand { get; set; }
         public ICommand RegistrarCommand { get; set; }
         public ICommand DirecionarCadastroCommand { get; set; }
-       
+
 
         //region compacta o codigo visualmente.
         #region AtributosPropriedades
@@ -37,21 +37,21 @@ namespace AppRpgEtec.ViewModels.Usuarios
         private string senha = string.Empty;
 
         //gerar GET/SET Ctrl + r + e
-        public string Login 
+        public string Login
         {
-            get {return  login; }
-            set 
-            { 
+            get { return login; }
+            set
+            {
                 login = value;
                 OnPropertyChanged();
             }
         }
-        public string Senha 
+        public string Senha
         {
             get { return senha; }
             set
-            { 
-                senha = value; 
+            {
+                senha = value;
                 OnPropertyChanged();
             }
         }
@@ -84,7 +84,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
                     Preferences.Set("UsuarioToken", uAutenticado.Token);
 
                     await Application.Current.MainPage.DisplayAlert("Informação", mensagem, "Ok");
-                    Application.Current.MainPage = new ListagemView();
+                    Application.Current.MainPage = new AppShell();
                     // Alteração para que view inicial possa ser a de listagem.
                 }
                 else
